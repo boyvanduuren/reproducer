@@ -1,0 +1,39 @@
+group 'xyz.vanduuren.playground'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    ext.kotlin_version = '1.3.41'
+    ext.serialization_version = '0.11.1'
+    ext.coroutines_version = '1.3.0-M2'
+    ext.output_path = 'output'
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin2js'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:$coroutines_version"
+}
+
+compileKotlin2Js {
+    kotlinOptions.outputFile = "${projectDir}/$output_path/output.js"
+    kotlinOptions.moduleKind = "commonjs"
+    kotlinOptions.sourceMap = true
+}
+
+clean {
+    delete new File("${projectDir}/$output_path")
+}
+
